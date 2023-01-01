@@ -1,7 +1,54 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
+// ```md
+// GIVEN I am using a daily planner to create a schedule
+// WHEN I open the planner
+// THEN the current day is displayed at the top of the calendar *
+// WHEN I scroll down
+// THEN I am presented with timeblocks for standard business hours*
+// WHEN I view the timeblocks for that day
+// THEN each timeblock is color coded to indicate whether it is in the past, present, or future*
+// WHEN I click into a timeblock
+// THEN I can enter an event
+// WHEN I click the save button for that timeblock
+// THEN the text for that event is saved in local storage
+// WHEN I refresh the page
+// THEN the saved events persist
+// ```
 $(function () {
+  var today = dayjs();
+  var hours = $('div[id^="hour-"]');
+  var saveButton = $( ".saveBtn" );
+
+  
+  $('#currentDay').text(today.format('[Today is ] dddd, MMM D, YYYY'));
+
+  var hours = $('div[id^="hour-"]');
+
+
+  hours.each(function(){
+  var hourBlock = parseInt(this.id.replace("hour-", ""));
+  if (hourBlock < today.hour()) {
+    this.classList.add('past');
+  } else if (hourBlock == today.hour()) {
+    this.classList.add('present');
+  } else {
+    this.classList.add('future');
+  }
+})
+
+// saveButton.on('click', function () {
+//   localStorage.setItem(hours, val)
+// });
+   console.log(hours.children(0))
+  
+  
+
+  
+ 
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
