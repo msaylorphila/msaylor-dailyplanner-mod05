@@ -1,35 +1,16 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-
-// ```md
-// GIVEN I am using a daily planner to create a schedule
-// WHEN I open the planner
-// THEN the current day is displayed at the top of the calendar *
-// WHEN I scroll down
-// THEN I am presented with timeblocks for standard business hours*
-// WHEN I view the timeblocks for that day
-// THEN each timeblock is color coded to indicate whether it is in the past, present, or future*
-// WHEN I click into a timeblock
-// THEN I can enter an event
-// WHEN I click the save button for that timeblock
-// THEN the text for that event is saved in local storage
-// WHEN I refresh the page
-// THEN the saved events persist
-// ```
 $(function () {
+  // These are variables for the current day and time, a call of each seperate div with an id of hour-, and a call to each saveBtn class.
   var today = dayjs();
   var hours = $('div[id^="hour-"]');
   var saveButton = $( ".saveBtn" );
 
-  
+  // this calls for the current day of the week and date specifically and adds it to the currentDay p tag.
   $('#currentDay').text(today.format('[Today is ] dddd, MMM D, YYYY'));
-
-  var hours = $('div[id^="hour-"]');
-  var textArea = $(`#${this.id} > textarea`)
-
+  // This function runs a for loop through each hour id
   hours.each(function(){
+    // this variable takes the integer from the hour id and parses it so that it is no longer a string while removing "hour-"
   var hourBlock = parseInt(this.id.replace("hour-", ""));
+  // this if statement compares the integer taken from the hour id with the current hour and sets our past, present, or future class
   if (hourBlock < today.hour()) {
     this.classList.add('past');
   } else if (hourBlock == today.hour()) {
@@ -37,39 +18,12 @@ $(function () {
   } else {
     this.classList.add('future');
   }
-
+// this calls for our what we save in our local storage and sets the appropriate text are value
   $(`#${this.id} > textarea`).val(localStorage.getItem(this.id))
 })
-
+// this is a click event for the save button that takes this (the button) and takes the id of the parent attribute as the key and then takes the sibling text area value and saves it as the value
 saveButton.on('click', function () {
   localStorage.setItem($(this).parent().attr('id'), $(this).siblings("textarea").val())
 });
 
-// hours.children().eq(1).val("I love my boyfriend. sort of.")
-   
-// console.log(hours.children().eq(1).val())
-  
-  
-
-  
- 
-
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
 });
