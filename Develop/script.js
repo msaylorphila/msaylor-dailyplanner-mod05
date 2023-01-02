@@ -26,7 +26,7 @@ $(function () {
   $('#currentDay').text(today.format('[Today is ] dddd, MMM D, YYYY'));
 
   var hours = $('div[id^="hour-"]');
-
+  var textArea = $(`#${this.id} > textarea`)
 
   hours.each(function(){
   var hourBlock = parseInt(this.id.replace("hour-", ""));
@@ -37,12 +37,17 @@ $(function () {
   } else {
     this.classList.add('future');
   }
+
+  $(`#${this.id} > textarea`).val(localStorage.getItem(this.id))
 })
 
-// saveButton.on('click', function () {
-//   localStorage.setItem(hours, val)
-// });
-   console.log(hours.children(0))
+saveButton.on('click', function () {
+  localStorage.setItem($(this).parent().attr('id'), $(this).siblings("textarea").val())
+});
+
+// hours.children().eq(1).val("I love my boyfriend. sort of.")
+   
+// console.log(hours.children().eq(1).val())
   
   
 
