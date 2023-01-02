@@ -23,4 +23,4 @@ N/A
 Please refer to the LICENSE in the repo.
 
 ## Link to deployed page
-[Click here for deployed page!]()
+[Click here for deployed page!]( https://msaylorphila.github.io/msaylor-dailyplanner-mod05/)
