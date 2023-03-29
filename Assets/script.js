@@ -6,6 +6,7 @@ $(function () {
 
   // this calls for the current day of the week and date specifically and adds it to the currentDay p tag.
   $('#currentDay').text(today.format('[Today is ] dddd, MMM D, YYYY'));
+  $('#currentTime').text(today.format('h:mm A'))
   // This function runs a for loop through each hour id
   hours.each(function(){
     // this variable takes the integer from the hour id and parses it so that it is no longer a string while removing "hour-"
